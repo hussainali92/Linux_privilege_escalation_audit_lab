@@ -1,0 +1,8 @@
+- labuser successfully logged in over SSH
+- labuser attempted sudo commands but lacked privileges
+- adminops was created by the main administrative account
+- adminops was added to the sudo group
+- adminops successfully executed privileged commands
+- tempops was created after privilege escalation
+- auth.log confirmed SSH sessions, sudo failures, and account creation traces
+- auditd confirmed sudo execution, user management activity, and identity file modifications

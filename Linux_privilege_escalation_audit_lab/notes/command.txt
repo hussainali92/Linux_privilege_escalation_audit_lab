@@ -1,0 +1,42 @@
+sudo systemctl enable --now ssh
+sudo systemctl enable --now auditd
+sudo systemctl status ssh --no-pager
+sudo systemctl status auditd --no-pager
+
+id labuser
+
+sudo tee /etc/audit/rules.d/lab.rules > /dev/null <<'EOF'
+-w /usr/bin/sudo -p x -k sudo_exec
+-w /usr/sbin/useradd -p x -k user_mgmt
+-w /usr/sbin/usermod -p x -k user_mgmt
+-w /etc/passwd -p wa -k identity_files
+-w /etc/shadow -p wa -k identity_files
+EOF
+
+sudo augenrules --load
+sudo auditctl -l
+
+ssh labuser@127.0.0.1
+sudo -l
+sudo id
+
+sudo useradd -m -s /bin/bash adminops
+echo 'adminops:AdminPass123!' | sudo chpasswd
+sudo usermod -aG sudo adminops
+id adminops
+groups adminops
+
+ssh adminops@127.0.0.1
+sudo -l
+sudo id
+sudo useradd -m -s /bin/bash tempops
+echo 'tempops:TempPass123!' | sudo chpasswd
+id tempops
+
+grep labuser /var/log/auth.log
+grep adminops /var/log/auth.log
+grep tempops /var/log/auth.log
+
+ausearch -k sudo_exec -i
+ausearch -k user_mgmt -i
+ausearch -k identity_files -i

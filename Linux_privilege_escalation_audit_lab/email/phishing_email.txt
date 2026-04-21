@@ -1,0 +1,11 @@
+From: hr-support@company-secure-mail.com
+To: employee@corp.local
+Subject: Updated Employee Policy Document
+
+Hello,
+
+Please review the attached employee policy update immediately.
+Open the document and enable content to view the protected file.
+
+Regards,
+HR Support
